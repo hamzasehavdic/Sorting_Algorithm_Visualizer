@@ -1,4 +1,4 @@
-# Sorting_Algorithm_Visualizer
+# Sorting Algorithm Visualizer
 
 ## Milestone 1: GUI
 - [x] Create Sorting Algorithm Visualizer GUI using Pygame
