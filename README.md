@@ -6,7 +6,7 @@
 ## Milestone 2: Implement Sorting Algorithms
 - [x] Bubble Sort
 - [x] Insertion Sort
-- [ ] Selection Sort
+- [x] Selection Sort
 - [ ] Quick Sort
 - [ ] Heap Sort
 - [ ] Counting Sort
