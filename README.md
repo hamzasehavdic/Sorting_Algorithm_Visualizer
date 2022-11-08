@@ -1,4 +1,5 @@
 # Sorting Algorithm Visualizer
+![alt text](https://github.com/hamzasehavdic/sorting-algorithm-visualizer/blob/main/image.jpg?raw=true)
 
 ## Milestone 1: GUI
 - [x] Create Sorting Algorithm Visualizer GUI using Pygame
