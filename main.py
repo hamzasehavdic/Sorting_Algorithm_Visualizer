@@ -1,10 +1,9 @@
 import random
-import pygame
+import pygame # for GUI
 import math
 
 # Initialize entire pygame module for usage
 pygame.init()
-
 
 # To access global values
 class DrawInformation:
@@ -68,7 +67,7 @@ def draw(draw_info, sorting_algo_name, ascending):
     
     caption_top_pad = 20
     
-    # MAGENTAraw every single frame
+    # Draw every single frame
     draw_info.window.fill(draw_info.BACKGROUND_COLOR)
 
     title = draw_info.LARGE_FONT.render(f"{sorting_algo_name} - {'Ascending' if ascending else 'Descending'}", 1, draw_info.MAGENTA)
@@ -77,7 +76,7 @@ def draw(draw_info, sorting_algo_name, ascending):
     controls = draw_info.FONT.render("R - Reset | SPACE - Start Sort | A - Ascending | D - Descending", 1, draw_info.WHITE)
     draw_info.window.blit(controls, (draw_info.width/2 - controls.get_width()/2, caption_top_pad*4))
 
-    sorting = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort", 1, draw_info.WHITE)
+    sorting = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort | S - Selection Sort", 1, draw_info.CYAN)
     draw_info.window.blit(sorting, (draw_info.width/2 - sorting.get_width()/2, caption_top_pad*6))
     
     draw_list(draw_info)
@@ -108,7 +107,7 @@ def draw_list(draw_info, color_positions={}, clear_bg=False):
         pygame.draw.rect(draw_info.window, draw_info.BLACK, (x, y, draw_info.block_width/5, draw_info.height))
 
     if clear_bg:
-        pygame.display.update()
+        pygame.display.update() 
 
 def generate_starting_list(n, min_val, max_val):
     lst = []
@@ -162,6 +161,23 @@ def insertion_sort(draw_info, ascending=True):
 
     return lst
 
+def selection_sort(draw_info, ascending=True):
+    lst = draw_info.lst
+
+    for cur in range(len(lst)):
+        min_index = cur
+ 
+        for j in range(cur + 1, len(lst)):
+            # select the minimum element in every iteration
+            if (lst[j] < lst[min_index] and ascending) or (lst[j] > lst[min_index] and not ascending):
+                min_index = j
+            draw_list(draw_info, {min_index: draw_info.CYAN, j: draw_info.MAGENTA}, True)
+            yield True
+
+         # swapping the elements to sort the lst
+        lst[cur], lst[min_index] = lst[min_index], lst[cur]
+    
+
 
 def main():
     run = True
@@ -185,7 +201,7 @@ def main():
     # While the game is running
     while run:
         # Set FPS
-        clock.tick(60)
+        clock.tick(30)
 
         # Draw information
         if sorting:
@@ -219,6 +235,9 @@ def main():
             elif event.key == pygame.K_i and not sorting:
                 sorting_algorithm = insertion_sort
                 sorting_algo_name = "Insertion Sort"
+            elif event.key == pygame.K_s and not sorting:
+                sorting_algorithm = selection_sort
+                sorting_algo_name = "Selection Sort"
             elif event.key == pygame.K_b and not sorting:
                 sorting_algorithm = bubble_sort
                 sorting_algo_name = "Bubble Sort"
