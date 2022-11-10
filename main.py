@@ -1,7 +1,6 @@
 import pygame # For all GUI
 import random # To generate random values - creating unsorted lists
 import math # To calculate floor of block height - preventing overflow
-# Test
 
 # Initialize entire pygame module for usage
 pygame.init()
