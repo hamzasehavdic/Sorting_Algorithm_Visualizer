@@ -1,6 +1,7 @@
-import random
-import pygame # for GUI
-import math
+import pygame # For all GUI
+import random # To generate random values - creating unsorted lists
+import math # To calculate floor of block height - preventing overflow
+# Test
 
 # Initialize entire pygame module for usage
 pygame.init()
@@ -76,7 +77,7 @@ def draw(draw_info, sorting_algo_name, ascending):
     controls = draw_info.FONT.render("R - Reset | SPACE - Start Sort | A - Ascending | D - Descending", 1, draw_info.WHITE)
     draw_info.window.blit(controls, (draw_info.width/2 - controls.get_width()/2, caption_top_pad*4))
 
-    sorting = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort | S - Selection Sort", 1, draw_info.CYAN)
+    sorting = draw_info.FONT.render("I - Insertion Sort | B - Bubble Sort | S - Selection Sort | Q - Quick Sort", 1, draw_info.CYAN)
     draw_info.window.blit(sorting, (draw_info.width/2 - sorting.get_width()/2, caption_top_pad*6))
     
     draw_list(draw_info)
@@ -152,7 +153,7 @@ def insertion_sort(draw_info, ascending=True):
             if not ascending_mode and not descending_mode:
                 break
 
-            lst[i] = lst[i - 1] # make current
+            lst[i] = lst[i - 1] # Make current
             i -= 1
             lst[i] = cur
                 
@@ -168,16 +169,14 @@ def selection_sort(draw_info, ascending=True):
         min_index = cur
  
         for j in range(cur + 1, len(lst)):
-            # select the minimum element in every iteration
+            # Select the minimum element in every iteration
             if (lst[j] < lst[min_index] and ascending) or (lst[j] > lst[min_index] and not ascending):
                 min_index = j
             draw_list(draw_info, {min_index: draw_info.CYAN, j: draw_info.MAGENTA}, True)
             yield True
 
-         # swapping the elements to sort the lst
+        # Swapping the elements to sort the lst
         lst[cur], lst[min_index] = lst[min_index], lst[cur]
-    
-
 
 def main():
     run = True
@@ -241,6 +240,9 @@ def main():
             elif event.key == pygame.K_b and not sorting:
                 sorting_algorithm = bubble_sort
                 sorting_algo_name = "Bubble Sort"
+            elif event.key == pygame.K_q and not sorting:
+                sorting_algorithm = quicksort
+                sorting_algo_name = "Quick Sort"
 
         
     pygame.quit()
