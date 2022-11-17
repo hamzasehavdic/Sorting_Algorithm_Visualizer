@@ -1,9 +1,20 @@
-import pygame # For all GUI
-import random # To generate random values - creating unsorted lists
-import math # To calculate floor of block height - preventing overflow
+# For GUI
+import pygame
+
+# Create unsorted lists using random values
+import random
+
+# To calculate floor of block height - preventing overflow
+import math
+
+# Sorting Algorithm Implementation
+from algorithms.bubble_sort import bubble_sort
+from algorithms.insertion_sort import insertion_sort
+from algorithms.selection_sort import selection_sort
+
 
 # Initialize entire pygame module for usage
-pygame.init()
+pygame.font.init()
 
 # To access global values
 class DrawInformation:
@@ -117,65 +128,6 @@ def generate_starting_list(n, min_val, max_val):
         lst.append(val)
 
     return lst
-
-
-def bubble_sort(draw_info, ascending=True):
-    lst = draw_info.lst
-
-    for i in range(len(lst) - 1):
-        for j in range(len(lst) - 1 - i):
-            num1 = lst[j]
-            num2 = lst[j + 1]
-
-            if (num1 > num2 and ascending) or (num1 < num2 and not ascending):
-                lst[j], lst[j + 1] = lst[j + 1], lst[j]
-                
-                # If numbers are sorted, draw shifted elements
-                draw_list(draw_info, {j: draw_info.CYAN, j + 1: draw_info.MAGENTA}, True)
-                yield True
-
-    return lst
-
-def insertion_sort(draw_info, ascending=True):
-    lst = draw_info.lst
-
-    for i in range(1, len(lst)):
-        cur = lst[i]
-
-        while True:
-            # True if last element greater than current element, and set to ascending
-            ascending_mode = lst[i - 1] > lst[i] and i > 0 and ascending
-            # True if last element less than current element, and set to descending
-            descending_mode = lst[i - 1] < lst[i] and i > 0 and not ascending
-
-            # If neither modes are true, then sort is done thus break
-            if not ascending_mode and not descending_mode:
-                break
-
-            lst[i] = lst[i - 1] # Make current
-            i -= 1
-            lst[i] = cur
-                
-            draw_list(draw_info, {i - 1: draw_info.CYAN, i: draw_info.MAGENTA}, True)
-            yield True
-
-    return lst
-
-def selection_sort(draw_info, ascending=True):
-    lst = draw_info.lst
-
-    for cur in range(len(lst)):
-        min_index = cur
- 
-        for j in range(cur + 1, len(lst)):
-            # Select the minimum element in every iteration
-            if (lst[j] < lst[min_index] and ascending) or (lst[j] > lst[min_index] and not ascending):
-                min_index = j
-            draw_list(draw_info, {min_index: draw_info.CYAN, j: draw_info.MAGENTA}, True)
-            yield True
-
-        # Swapping the elements to sort the lst
-        lst[cur], lst[min_index] = lst[min_index], lst[cur]
 
 def main():
     run = True
