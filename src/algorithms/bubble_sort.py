@@ -1,18 +1,14 @@
-# Bubble Sort Implementation
+# Sorting Algorithm Implementation: Bubble Sort
+from draw_info import *
 
-def bubble_sort(draw_info, ascending=True):
-    lst = draw_info.lst
-
-    for i in range(len(lst) - 1):
-        for j in range(len(lst) - 1 - i):
-            num1 = lst[j]
-            num2 = lst[j + 1]
-
-            if (num1 > num2 and ascending) or (num1 < num2 and not ascending):
-                lst[j], lst[j + 1] = lst[j + 1], lst[j]
-                
-                # If numbers are sorted, draw shifted elements
-                draw_list(draw_info, {j: draw_info.CYAN, j + 1: draw_info.MAGENTA}, True)
-                yield True
-
-    return lst
+def bubble_sort(array):
+    for i in range(len(array) - 1):
+        for j in range(len(array) - 1 - i):
+            
+            if array[j] > array[j + 1]:
+                array[j], array[j + 1] = array[j + 1], array[j]
+            
+            arr_clr[j], arr_clr[j + 1] = CYAN, MAGENTA
+            refill()
+            
+            arr_clr[j], arr_clr[j + 1] = WHITE, WHITE

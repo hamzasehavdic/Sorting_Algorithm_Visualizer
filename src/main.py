@@ -8,7 +8,7 @@ import random
 import math
 
 # Sorting Algorithm Implementation
-from algorithms.bubble_sort import bubble_sort
+
 from algorithms.insertion_sort import insertion_sort
 from algorithms.selection_sort import selection_sort
 
@@ -129,6 +129,21 @@ def generate_starting_list(n, min_val, max_val):
 
     return lst
 
+def bubble_sort(draw_info, ascending=True):
+    lst = draw_info.lst
+
+    for i in range(len(lst) - 1):
+        for j in range(len(lst) - 1 - i):
+            num1 = lst[j]
+            num2 = lst[j + 1]
+
+            if (num1 > num2 and ascending) or (num1 < num2 and not ascending):
+                lst[j], lst[j + 1] = lst[j + 1], lst[j]
+                
+                # If numbers are sorted, draw shifted elements
+                draw_list(draw_info, {j: draw_info.CYAN, j + 1: draw_info.MAGENTA}, True)
+                yield True
+
 def main():
     run = True
 
@@ -168,7 +183,7 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
             
-            if event.type != pygame.KEYDOWN:
+            if event.type != pygame.KEYDOWN :
                 continue
             
             if event.key == pygame.K_r:
@@ -192,7 +207,7 @@ def main():
                 sorting_algorithm = bubble_sort
                 sorting_algo_name = "Bubble Sort"
             elif event.key == pygame.K_q and not sorting:
-                sorting_algorithm = quicksort
+                sorting_algorithm = quick_sort
                 sorting_algo_name = "Quick Sort"
 
         
