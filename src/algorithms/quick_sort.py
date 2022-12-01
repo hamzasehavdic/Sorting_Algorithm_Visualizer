@@ -1,5 +1,6 @@
 # Sorting Algorithm Implementation: Quick Sort
-from draw_info import *
+from draw_info import array, arr_clr,\
+    CYAN, MAGENTA, WHITE, refill, pygame
 
 def quick_sort(array, l, r):
 	if l<r:
@@ -30,4 +31,4 @@ def partition(array, low, high):
 	arr_clr[high]= WHITE
 	array[i + 1], array[high] = array[high], array[i + 1]
 	
-	return ( i + 1 )
+	return (i + 1)

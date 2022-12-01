@@ -1,26 +1,33 @@
-# Insertion Sort Implementation
+# Sorting Algorithm Implenetion: Insertion Sort
+from draw_info import array, arr_clr,\
+    CYAN, MAGENTA, WHITE, refill, pygame
 
-def insertion_sort(draw_info, ascending=True):
-    lst = draw_info.lst
+def insertion_sort(array):
+    for i in range(1, len(array)):
+        cur = array[i]
 
-    for i in range(1, len(lst)):
-        cur = lst[i]
-
+        
         while True:
-            # True if last element greater than current element, and set to ascending
-            ascending_mode = lst[i - 1] > lst[i] and i > 0 and ascending
-            # True if last element less than current element, and set to descending
-            descending_mode = lst[i - 1] < lst[i] and i > 0 and not ascending
+            
+            pygame.event.pump()
+            
+            # Draw sort
+            arr_clr[i - 1], arr_clr[i] = CYAN, MAGENTA 
+            refill()
+                
+            arr_clr[i - 1], arr_clr[i] = WHITE, WHITE
 
-            # If neither modes are true, then sort is done thus break
-            if not ascending_mode and not descending_mode:
+            # Check for conditions to sort in ascending order
+            ascending = array[i - 1] > array[i] and i > 0
+
+            # If neither conditions are true, then break sort
+            if not ascending:
                 break
 
-            lst[i] = lst[i - 1] # Make current
+            # Since ascending condition satisfied, perform insertion sort
+            array[i] = array[i - 1]
             i -= 1
-            lst[i] = cur
+            array[i] = cur
                 
-            draw_list(draw_info, {i - 1: draw_info.CYAN, i: draw_info.MAGENTA}, True)
-            yield True
 
-    return lst
+    return array

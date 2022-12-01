@@ -1,15 +1,23 @@
-def selection_sort(draw_info, ascending=True):
-    lst = draw_info.lst
+# Sorting Algorithm Implementation: Selection Sort
+from draw_info import array, arr_clr,\
+    CYAN, MAGENTA, WHITE, refill, pygame
 
-    for cur in range(len(lst)):
+def selection_sort(array):
+
+    for cur in range(len(array)):
         min_index = cur
- 
-        for j in range(cur + 1, len(lst)):
-            # Select the minimum element in every iteration
-            if (lst[j] < lst[min_index] and ascending) or (lst[j] > lst[min_index] and not ascending):
-                min_index = j
-            draw_list(draw_info, {min_index: draw_info.CYAN, j: draw_info.MAGENTA}, True)
-            yield True
+        
+        for j in range(cur + 1, len(array)):
 
-        # Swapping the elements to sort the lst
-        lst[cur], lst[min_index] = lst[min_index], lst[cur]
+            pygame.event.pump()
+            
+            # Select the minimum element in every iteration
+            if array[j] < array[min_index]:
+                min_index = j
+            
+            arr_clr[j], arr_clr[cur] = CYAN, MAGENTA
+            refill()
+            arr_clr[j], arr_clr[cur] = WHITE, WHITE
+
+        # Swapping the elements to sort the array
+        array[cur], array[min_index] = array[min_index], array[cur]

@@ -6,6 +6,9 @@ import random
 
 # To calculate floor of block height - preventing overflow
 import math
+import os
+import psutil
+
 
 pygame.init()
 
@@ -25,11 +28,11 @@ WHITE = (255, 255, 255)
 CYAN = (0, 255, 255)
 MAGENTA = (255, 0, 255)
 GREEN = (0, 255, 0)
-BLACK = (40, 40, 40)
+BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 
 # Array for element values
-n = 100
+n = 50
 array = [0] * n
 arr_clr =[(0, 0, 0)] * n
 
@@ -56,8 +59,13 @@ fontname = "Tahoma"
 LARGE_FONT = pygame.font.SysFont(fontname, 40, bold=pygame.font.Font.bold)
 FONT = pygame.font.SysFont(fontname, 25)
 
-# Algorithm name
-algo_name = "Quick Sort"
+
+def mem_use():
+    # Check performance
+    pid = os.getpid()
+    py = psutil.Process(pid)
+    memoryUse = py.memory_info()[0]/2.**30  # memory use in GB...I think
+    print('memory use:', memoryUse)
 
 
 def draw():
@@ -65,19 +73,23 @@ def draw():
     start_x = SIDE_PAD // 2
 
     # Render Title, then position on screen
-    title = LARGE_FONT.render("SORT : PRESS ' SPACE '", 1, WHITE)
+    title = LARGE_FONT.render(f"Select Sorting Algorithm", 1, WHITE)
     screen.blit(title, (width/2 - title.get_width()/2, top_padding))
 
     # Render Reset text, then position on screen
-    reset_txt = FONT.render("Reset : Press ' R '", 1, CYAN)
+    reset_txt = FONT.render("R = Reset", 1, CYAN)
     screen.blit(reset_txt, (width/2 - reset_txt.get_width()/2, top_padding * 4))
 
     # Render Algorithm name, then position on screen
-    algo_txt = FONT.render(f"Sorting Algorithm : ' {algo_name} '", 1, MAGENTA)
+    algo_txt = FONT.render("i = Insertion Sort | b = Bubble Sort | s = Selection Sort | q = Quick Sort", 1, MAGENTA)
     screen.blit(algo_txt, (width/2 - algo_txt.get_width()/2, top_padding * 6))
 
     # Drawing each block on screen
     for i, val in enumerate(array):
+
+        # Check performance
+        mem_use()
+
         # Block width
         x = start_x + i * block_width
         # Block length: how far down to draw length
@@ -92,7 +104,7 @@ def refill():
     screen.fill(BLACK) # Fill display WHITE background colour
     draw()
     pygame.display.update() # Update the display
-    pygame.time.delay(30) # Ensure 30fps
+    pygame.time.delay(60) # Ensure 30fps
 
 
 def run_sort(sorting, sorting_algorithm):
